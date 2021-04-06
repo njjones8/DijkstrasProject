@@ -5,14 +5,18 @@ struct Vertex
 {
 	int color;
 	int weight;
+	Vertex* next;
 };
 
 class Graph
 {
-public:
-	
+private:
+	bool directed = false;
+	Vertex* AdjList;
 
+public:
 	Graph* initialize(int n, int m);
+	void addNode(int x, int y, int edgeWeight);
 };
 
 #endif
