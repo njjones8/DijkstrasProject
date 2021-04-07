@@ -15,7 +15,7 @@ private:
 
 public:
 	Graph();
-	Graph(int, int);
+	Graph(int);
 
 	void insertNode(int x, int y, int edgeWeight);
 	void setDirected(bool);
