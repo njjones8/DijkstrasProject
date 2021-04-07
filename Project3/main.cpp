@@ -16,13 +16,6 @@ int main()
 	int n, flag, number;
 	Heap* heap = NULL;
 	ELEMENT* element = NULL;
-	
-	// set the input and output file names to strings up here 
-	// so i only change this if their names change
-	string inFile = "HEAPinput.txt";
-	string outFile = "HEAPoutput.txt";
-	ifstream readFile;
-	ofstream writeFile;
 
 	// loop runs until case S where program free's memory and then exits
 	while (1)
@@ -36,11 +29,11 @@ int main()
 			// stop
 			case 's':
 			case 'S':
-				garbageCollector(heap); 
+				//garbageCollector(heap); 
 				exit(0);
 
 			// initialize heap with capacity n
-			case 'c':
+			/*case 'c':
 			case 'C':
 				heap = heap->initialize(n);
 				break;
@@ -149,7 +142,7 @@ int main()
 					break;
 				}
 				heap->decreaseKey(heap, n, flag);
-				break;
+				break;*/
 
 			default:
 				break;
@@ -158,7 +151,7 @@ int main()
 }
 
 // called before program closes to free all dynamically allocated memory
-void garbageCollector(Heap *heap)
+/*void garbageCollector(Heap *heap)
 {
 	// makes sure heap is NOT null before freeing memory
 	if (heap != NULL)
@@ -168,4 +161,4 @@ void garbageCollector(Heap *heap)
 		free(heap->H);
 		free(heap);
 	}
-}
+}*/
