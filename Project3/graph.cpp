@@ -1,12 +1,19 @@
 #include "graph.h"
 
+// default constructor
 Graph::Graph()
 {
 	adjList = NULL;
+	directed = false;
 }
 
-Graph::Graph(int n)
+// constructor i will use
+Graph::Graph(int n, std::string d)
 {
+	if (d == "directed" || "Directed")
+		directed = true;
+	else
+		directed = false;
 	adjList = (Node**)calloc(n+1, sizeof(Node*));
 	for (int i = 1; i <= n; i++)
 		adjList[i] = NULL;

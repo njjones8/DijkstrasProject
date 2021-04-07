@@ -10,12 +10,12 @@
 class Graph
 {
 private:
-	bool directed = false;
+	bool directed;
 	Node** adjList;
 
 public:
 	Graph();
-	Graph(int);
+	Graph(int, std::string);
 
 	void insertNode(int x, int y, int edgeWeight);
 	void setDirected(bool);
