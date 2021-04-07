@@ -5,22 +5,20 @@
 #include <stdlib.h>
 #include <iostream>
 
-struct Vertex
-{
-	int color;
-	int weight;
-	Vertex* next;
-};
+#include "node.h"
 
 class Graph
 {
 private:
 	bool directed = false;
-	Vertex* adjList[];
+	Node** adjList;
 
 public:
-	Graph* initialize(int n, int m);
-	void addNode(int x, int y, int edgeWeight);
+	Graph();
+	Graph(int, int);
+
+	void insertNode(int x, int y, int edgeWeight);
+	void setDirected(bool);
 };
 
 #endif
