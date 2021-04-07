@@ -18,7 +18,8 @@ public:
 	Graph(int, std::string);
 
 	void insertNode(int x, int y, int edgeWeight);
-	void setDirected(bool);
+	bool direction(std::string);
+	
 };
 
 #endif
