@@ -2,13 +2,13 @@
 
 Graph::Graph()
 {
-
+	adjList = NULL;
 }
 
 Graph::Graph(int n, int m)
 {
-	adjList = (Node**)malloc((n + 1) * sizeof(Node*));
-	for (int i = 0; i < n + 1; i++)
+	adjList = (Node**)calloc(n+1, sizeof(Node*));
+	for (int i = 1; i <= n; i++)
 		adjList[i] = NULL;
 }
 
