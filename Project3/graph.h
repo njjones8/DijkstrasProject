@@ -10,6 +10,7 @@
 class Graph
 {
 private:
+	int numVertices;
 	bool directed;
 	Node** adjList;
 
@@ -19,6 +20,7 @@ public:
 
 	void insertNode(int x, int y, int edgeWeight);
 	bool direction(std::string);
+	void print();
 	
 };
 

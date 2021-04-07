@@ -3,6 +3,7 @@
 // default constructor
 Graph::Graph()
 {
+	numVertices = 0;
 	adjList = NULL;
 	directed = false;
 }
@@ -10,6 +11,7 @@ Graph::Graph()
 // constructor i will use
 Graph::Graph(int n, std::string d)
 {
+	numVertices = n;
 	directed = direction(d);
 	adjList = (Node**)calloc(n+1, sizeof(Node*));
 	for (int i = 1; i <= n; i++)
@@ -18,7 +20,7 @@ Graph::Graph(int n, std::string d)
 
 bool Graph::direction(std::string d)
 {
-	if (d == "directed" || "Directed")
+	if (d == "directed" || d == "Directed")
 		return true;
 	return false;
 }
@@ -33,5 +35,22 @@ void Graph::insertNode(int x, int y, int edgeWeight)
 		Node* newNode2 = new Node(x, edgeWeight);
 		newNode2->next = adjList[y];
 		adjList[y] = newNode2;
+	}
+}
+
+// print function i made for debugging purposes
+void Graph::print()
+{
+	for (int i = 1; i <= numVertices; i++)
+	{
+		Node** temp = adjList;
+		std::cout << i;
+		while (temp[i] != NULL)
+		{
+			std::cout << " -> ";
+			std::cout << temp[i]->num << ":Weight " << temp[i]->weight;
+			temp[i] = temp[i]->next;
+		}
+		std::cout << std::endl;
 	}
 }
