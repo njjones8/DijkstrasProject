@@ -2,14 +2,14 @@
 
 Node::Node()
 {
-	dest = -1;
+	num = -1;
 	weight = 0;
 	next = NULL;
 }
 
 Node::Node(int d, int w)
 {
-	dest = d;
+	num = d;
 	weight = w;
 	next = NULL;
 }

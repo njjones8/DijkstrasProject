@@ -9,7 +9,7 @@ class Node
 {
 public:
 	Node* next;
-	int dest;
+	int num;
 	float weight;
 	
 	// constructor 
