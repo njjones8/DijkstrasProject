@@ -1,5 +1,35 @@
 #include "util.h"
 
+Graph* initializeGraph()
+{
+    std::ifstream readFile;
+
+    std::string fileName = "";
+    std::cin >> fileName;
+    std::string direction = "";
+    std::cin >> direction;
+
+    int vertices = 0, edges = 0;
+    readFile.open(fileName);
+    readFile >> vertices;
+    readFile >> edges;
+
+    Graph* graph = new Graph(vertices, direction);
+
+    for (int i = 0; i < edges; i++)
+    {
+        int edgeNum = 0, x = 0, y = 0, weight = 0;
+        readFile >> edgeNum;
+        readFile >> x;
+        readFile >> y;
+        readFile >> weight;
+
+        graph->insertNode(x, y, weight);
+    }
+
+    return graph;
+}
+
 // only command in util.cpp, used to get user input
 int nextCommand(int* n, int* f)
 {
