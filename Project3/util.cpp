@@ -27,6 +27,8 @@ Graph* initializeGraph()
         graph->insertNode(x, y, weight);
     }
 
+    readFile.close();
+
     return graph;
 }
 
