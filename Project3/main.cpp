@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
+
 #include "heap.h"
 #include "util.h"
+#include "graph.h"
 
 using namespace std;
 
@@ -17,8 +19,10 @@ int main()
 	Heap* heap = NULL;
 	ELEMENT* element = NULL;
 
+	Graph* graph = initializeGraph();
+
 	// loop runs until case S where program free's memory and then exits
-	while (1)
+	/*while (1)
 	{
 		// calls nextCommand in util module to find out what the user
 		// wants the program to do next
@@ -142,12 +146,12 @@ int main()
 					break;
 				}
 				heap->decreaseKey(heap, n, flag);
-				break;*/
+				break;
 
 			default:
 				break;
 		}
-	}
+	}*/
 }
 
 // called before program closes to free all dynamically allocated memory
