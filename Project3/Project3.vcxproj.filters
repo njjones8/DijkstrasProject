@@ -30,6 +30,9 @@
     <ClCompile Include="node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vertex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="heap.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
