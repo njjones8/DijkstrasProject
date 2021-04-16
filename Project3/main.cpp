@@ -5,22 +5,52 @@
 
 #include "heap.h"
 #include "util.h"
+#include "vertex.h"
 #include "graph.h"
 
 using namespace std;
 
 void garbageCollector(Heap* heap);
+int dijkstra(Graph* g, int source, int dest, int flag);
+
+void testFunc(int* n)
+{
+	cin >> *n;
+}
 
 int main()
 {
 	// variable initialization
-	char c;
-	int n, flag, number;
+	int cmd, source, destination, flag;
 	Heap* heap = NULL;
 	ELEMENT* element = NULL;
 
-	Graph* graph = initializeGraph();
+	//Graph* graph = initializeGraph();
 
+	// loops until nextcommand returns a 0
+	while (nextCommand(&cmd, &source, &destination, &flag)) 
+	{
+		switch (cmd)
+		{
+			case 1:
+				cout << "Case 1" << endl;
+				break;
+			case 2:
+				cout << "Case 2" << endl;
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+
+
+int dijkstra(Graph *g, int source, int dest, int flag)
+{
+	//Vertex **vertexList = 
+	return 0;
+}
 	// loop runs until case S where program free's memory and then exits
 	/*while (1)
 	{
@@ -152,7 +182,6 @@ int main()
 				break;
 		}
 	}*/
-}
 
 // called before program closes to free all dynamically allocated memory
 /*void garbageCollector(Heap *heap)
