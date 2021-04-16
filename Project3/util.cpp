@@ -1,5 +1,7 @@
 #include "util.h"
 
+using namespace std;
+
 Graph* initializeGraph()
 {
     std::ifstream readFile;
@@ -33,67 +35,68 @@ Graph* initializeGraph()
 }
 
 // only command in util.cpp, used to get user input
-int nextCommand(int* n, int* f)
+int nextCommand(int* c, int* s, int* d, int* f)
 {
-    char c;
-    while (1)
+    string cmd = "";
+    bool foundCommand = false; // loop runs until it gets valid command
+    int valid = 0;
+
+    while (foundCommand == false)
     {
-
-        std::cin >> c;
-
-        // checks if the input in ascii is from a-z or A-Z
-        // if its not then it is an invalid input for this program
-        if (!((c >= 97 && c <= 122) || (c >= 65 && c <= 90)))
-            std::cout << "Warning in nextCommand: invalid input" << std::endl;
-
-        if (c == 'S' || c == 's')
-            break;
-
-        if (c == 'C' || c == 'c')
+        cin >> cmd;
+        if (cmd == "find" || cmd == "Find")
         {
-            std::cin >> *n;
-            // if the input is a 0
-            if (*n == 0)
-                std::cout << "Warning in nextCommand: read in int " << *n << std::endl;
-            break;
+            *c = 1;
+            cin >> *s;
+            cin >> *d;
+            cin >> *f;
+            printQuery(cmd, *c, *s, *d, *f);
+            foundCommand = true;
         }
-
-        if (c == 'r' || c == 'R')
+        else if (cmd == "write" || cmd == "Write")
         {
-            std::cin >> *f;
-            break;
+            *c = 2;
+            cin >> *s;
+            cin >> *d;
+            printQuery(cmd, *c, *s, *d, *f);
+            foundCommand = true;
         }
-
-        if (c == 'p' || c == 'P')
-            break;
-
-        if (c == 'w' || c == 'W')
-            break;
-
-        if (c == 'I' || c == 'i')
+        else if (cmd == "stop" || cmd == "Stop")
         {
-            std::cin >> *n;
-            if (*n == 0)
-                std::cout << "Warning in nextCommand: read in int " << *n << std::endl;
-            break;
+            *c = 0;
+            printQuery(cmd, *c, *s, *d, *f);
+            return 0;
         }
-            
-        if (c == 'D' || c == 'd')
+        else
         {
-            std::cin >> *f;
-            break;
+            cout << "Error invalid command" << endl;
         }
-
-        if (c == 'K' || c == 'k')
-        {
-            std::cin >> *n;
-            std::cin >> *f;
-            break;
-        }
-
-        // clears input so if garbage is given to the program it does not get stuck
-        std::cin.clear();
-        std::cin.ignore(1000, '\n');
+        clearInput();
     }
-    return c;
+    return 1;
+}
+
+void printQuery(string cmd, int c, int s, int d, int f)
+{
+    if (c == 1)
+        cout << "Query: " << cmd << " " << s << " " << d << " " << f << endl;
+    else if (c == 2)
+        cout << "Query: " << cmd << " " << s << " " << d << endl;
+    else if (c == 0)
+        cout << "Query: " << cmd << endl;
+}
+
+// clears input so if garbage is given to the program it does not get stuck
+void clearInput()
+{
+    cin.clear();
+    cin.ignore(1000, '\n');
+}
+
+int checkInput()
+{
+    if (!cin)
+        return 0;
+    else
+        return 1;
 }
