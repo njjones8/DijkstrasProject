@@ -7,10 +7,11 @@
 #include "util.h"
 #include "vertex.h"
 #include "graph.h"
+#include "node.h"
 
 using namespace std;
 
-void garbageCollector(Heap* heap);
+//void garbageCollector(Heap* heap);
 int dijkstra(Graph* g, int source, int dest, int flag);
 
 void testFunc(int* n)
@@ -25,7 +26,7 @@ int main()
 	Heap* heap = NULL;
 	ELEMENT* element = NULL;
 
-	//Graph* graph = initializeGraph();
+	Graph* graph = initializeGraph();
 
 	// loops until nextcommand returns a 0
 	while (nextCommand(&cmd, &source, &destination, &flag)) 
@@ -34,6 +35,7 @@ int main()
 		{
 			case 1:
 				cout << "Case 1" << endl;
+				dijkstra(graph, source, destination, flag);
 				break;
 			case 2:
 				cout << "Case 2" << endl;
@@ -46,9 +48,34 @@ int main()
 
 
 
-int dijkstra(Graph *g, int source, int dest, int flag)
+int dijkstra(Graph* g, int source, int dest, int flag)
 {
-	//Vertex **vertexList = 
+	Heap* h = (Heap*)malloc(sizeof(Heap));
+	h = h->initialize(g->getVertices());
+
+	// initialize vertex list held in heap class
+	for (int i = 1; i <= g->getVertices(); i++)
+	{
+		h->V[i] = (Vertex*)malloc(sizeof(Vertex));
+		h->V[i]->setColor(0);
+		h->V[i]->setDistance((float)INT_MAX);
+		h->V[i]->setPi(NULL);
+	}
+
+	h->V[source]->setDistance(0);
+	h->V[source]->setColor(1);
+	h->H[source] = (ELEMENT*)malloc(sizeof(ELEMENT));
+	h->H[source]->key = 0;
+	h->insert(h, h->H[source]);
+
+	/*for (int i = 1; i <= g->getVertices(); i++)
+	{
+		cout << h->V[i]->getColor() << endl;
+		cout << h->V[i]->getDistance() << endl;
+		cout << h->V[i]->getPi() << endl;
+	}*/
+
+
 	return 0;
 }
 	// loop runs until case S where program free's memory and then exits
