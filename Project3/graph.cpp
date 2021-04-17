@@ -48,13 +48,13 @@ void Graph::print()
 {
 	for (int i = 1; i <= numVertices; i++)
 	{
-		Node** temp = adjList;
+		Node* temp = adjList[i];
 		std::cout << i;
-		while (temp[i] != NULL)
+		while (temp != NULL)
 		{
 			std::cout << " -> ";
-			std::cout << temp[i]->num << ":Weight " << temp[i]->weight;
-			temp[i] = temp[i]->next;
+			std::cout << temp->num << ":Weight " << temp->weight;
+			temp = temp->next;
 		}
 		std::cout << std::endl;
 	}
