@@ -21,7 +21,9 @@ public:
 	void insertNode(int x, int y, int edgeWeight);
 	bool direction(std::string);
 	void print();
+	int getVertices();
 	
+	Node** getList();
 };
 
 #endif

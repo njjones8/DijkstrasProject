@@ -38,6 +38,11 @@ void Graph::insertNode(int x, int y, int edgeWeight)
 	}
 }
 
+Node** Graph::getList()
+{
+	return adjList;
+}
+
 // print function i made for debugging purposes
 void Graph::print()
 {
@@ -53,4 +58,9 @@ void Graph::print()
 		}
 		std::cout << std::endl;
 	}
+}
+
+int Graph::getVertices()
+{
+	return numVertices;
 }
