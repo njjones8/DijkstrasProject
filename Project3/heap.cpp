@@ -10,6 +10,7 @@ Heap *Heap::initialize(int n)
 	heap->size = 0;
 	heap->capacity = n;
 	heap->H = (ELEMENT**)malloc(sizeof(ELEMENT*) * (n + 1));
+	heap->V = (Vertex**)malloc(sizeof(Vertex*) * (n + 1));
 	return heap;
 }
 

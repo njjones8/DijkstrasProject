@@ -5,10 +5,12 @@
 #include <stdlib.h>
 #include <iostream>
 #include <math.h> // for floor command
+#include "vertex.h"
 
 // ElEMENT structure definition
 struct ELEMENT {
-	int key;
+	float key;
+	int vertex;
 };
 
 // Heap declaration
@@ -18,6 +20,7 @@ public:
 	// variables
 	int capacity, size, numCalls;
 	ELEMENT** H;
+	Vertex** V;
 
 	// functions
 	Heap* initialize(int n);
