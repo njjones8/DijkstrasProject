@@ -29,7 +29,7 @@ public:
 	// heap operations
 	void insert(Heap* heap, ELEMENT* element);
 	ELEMENT* extractMin(Heap* heap);
-	void decreaseKey(Heap* heap, int index, int value);
+	void decreaseKey(Heap* heap, int index, float value);
 	void minHeapify(Heap* heap, int index);
 	void buildHeap(Heap* heap);
 

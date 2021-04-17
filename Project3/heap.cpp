@@ -53,7 +53,7 @@ ELEMENT* Heap::extractMin(Heap* heap)
 
 // changes the value of an element in the heap and then swaps 
 // values up the heap to make sure it stays as a heap
-void Heap::decreaseKey(Heap* heap, int index, int value)
+void Heap::decreaseKey(Heap* heap, int index, float value)
 {
 	heap->H[index]->key = value;
 	int j = index;
@@ -120,4 +120,3 @@ int Heap::right(int n)
 {
 	return (n*2)+1;
 }
-
