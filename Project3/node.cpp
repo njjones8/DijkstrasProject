@@ -7,6 +7,13 @@ Node::Node()
 	next = NULL;
 }
 
+Node::Node(int d)
+{
+	num = d;
+	weight = 0;
+	next = NULL;
+}
+
 Node::Node(int d, int w)
 {
 	num = d;

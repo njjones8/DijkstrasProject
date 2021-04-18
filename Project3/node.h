@@ -14,6 +14,7 @@ public:
 	
 	// constructor 
 	Node();
+	Node(int);
 	Node(int, int);
 };
 
