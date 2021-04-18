@@ -16,12 +16,12 @@ using namespace std;
 int dijkstra(Graph* g, Heap* h, int source, int dest, int flag);
 int writePath(Heap* h, int source, int dest);
 
-int main()
+int main(string s, string d)
 {
 	// variable initialization
 	int cmd, source, destination, flag, err;
 
-	Graph* graph = initializeGraph();
+	Graph* graph = initializeGraph(s, d);
 	Heap* h = NULL;
 	//graph->print();
 

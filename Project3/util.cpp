@@ -2,14 +2,9 @@
 
 using namespace std;
 
-Graph* initializeGraph()
+Graph* initializeGraph(string fileName, string direction)
 {
-    std::ifstream readFile;
-
-    std::string fileName = "";
-    std::cin >> fileName;
-    std::string direction = "";
-    std::cin >> direction;
+    ifstream readFile;
 
     int vertices = 0, edges = 0;
     readFile.open(fileName);

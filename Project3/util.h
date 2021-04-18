@@ -6,7 +6,7 @@
 #include <string>
 #include "graph.h"
 int nextCommand(int*, int*, int*, int*);
-Graph* initializeGraph();
+Graph* initializeGraph(string, string);
 int checkInput();
 void clearInput();
 void printQuery(std::string cmd, int c, int s, int d, int f);
