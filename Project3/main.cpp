@@ -12,7 +12,8 @@
 using namespace std;
 
 //void garbageCollector(Heap* heap);
-int dijkstra(Graph* g, int source, int dest, int flag);
+int dijkstra(Graph* g, Heap* h, int source, int dest, int flag);
+int writePath(Heap* h, int source, int dest);
 
 int main()
 {
@@ -22,6 +23,7 @@ int main()
 	ELEMENT* element = NULL;
 
 	Graph* graph = initializeGraph();
+	Heap* h = NULL;
 	cout << endl;
 	graph->print();
 	cout << endl << endl;
@@ -32,9 +34,13 @@ int main()
 		switch (cmd)
 		{
 			case 1:
-				dijkstra(graph, source, destination, flag);
+				// free memory of heap right here if it is not NULL
+				h = h->initialize(graph->getVertices());
+				dijkstra(graph, h, source, destination, flag);
 				break;
 			case 2:
+				// check if a find query has been done
+				writePath(h, source, destination);
 				break;
 			default:
 				break;
@@ -42,12 +48,30 @@ int main()
 	}
 }
 
-
-
-int dijkstra(Graph* g, int source, int dest, int flag)
+int writePath(Heap* h, int source, int dest)
 {
-	Heap* h = (Heap*)malloc(sizeof(Heap));
-	h = h->initialize(g->getVertices());
+	int current = dest;
+	int found = false;
+	Node* path = new Node();
+
+	while (h->V[current]->getPi() != -1 && found == false)
+	{
+		if (dest == source)
+			found = true;
+
+		path->num = current;
+		Node* temp = new Node();
+		path->next = temp;
+
+		current = h->V[current]->getPi();
+	}
+
+	return 0;
+}
+
+int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
+{
+	//h = h->initialize(g->getVertices());
 
 	// initialize vertex list held in heap class
 	for (int i = 1; i <= g->getVertices(); i++)
@@ -55,7 +79,7 @@ int dijkstra(Graph* g, int source, int dest, int flag)
 		h->V[i] = (Vertex*)malloc(sizeof(Vertex));
 		h->V[i]->setColor(0);
 		h->V[i]->setDistance((float)INT_MAX);
-		h->V[i]->setPi(NULL);
+		h->V[i]->setPi(-1);
 	}
 
 	h->V[source]->setDistance(0);
@@ -109,8 +133,6 @@ int dijkstra(Graph* g, int source, int dest, int flag)
 					printf("Decrease key of vertex %d, from %12.4f to %12.4f\n", edge->num, v->getDistance(), newDist);
 				v->setDistance(u->getDistance() + edge->weight);
 				v->setPi(extractIndex);
-				
-				int pos = v->getPosition();
 				//cout << "Current size of heap: " << h->size << endl;
 				//cout << "Setting index " << edge->num << " key to " << v->getDistance() << endl;
 				h->decreaseKey(h, v->getPosition(), v->getDistance());
