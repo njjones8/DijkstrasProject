@@ -55,13 +55,16 @@ int nextCommand(int* c, int* s, int* d, int* f)
         }
         else if (cmd == "write" || cmd == "Write")
         {
+            string temp = cmd;
             cin >> cmd;
+            temp += " ";
+            temp += cmd;
             if (cmd == "path" || cmd == "Path")
             {
                 *c = 2;
                 cin >> *s;
                 cin >> *d;
-                printQuery(cmd, *c, *s, *d, *f);
+                printQuery(temp, *c, *s, *d, *f);
                 foundCommand = true;
             }
         }
