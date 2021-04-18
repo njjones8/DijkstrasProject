@@ -18,15 +18,13 @@ int writePath(Heap* h, int source, int dest);
 int main()
 {
 	// variable initialization
-	int cmd, source, destination, flag;
+	int cmd, source, destination, flag, err;
 	Heap* heap = NULL;
 	ELEMENT* element = NULL;
 
 	Graph* graph = initializeGraph();
 	Heap* h = NULL;
-	cout << endl;
-	graph->print();
-	cout << endl << endl;
+	//graph->print();
 
 	// loops until nextcommand returns a 0
 	while (nextCommand(&cmd, &source, &destination, &flag)) 
@@ -40,7 +38,9 @@ int main()
 				break;
 			case 2:
 				// check if a find query has been done
-				writePath(h, source, destination);
+				err = writePath(h, source, destination);
+				if (err == -1)
+					cout << "No " << source << "-" << destination << " path exists.\n";
 				break;
 			default:
 				break;
@@ -51,22 +51,41 @@ int main()
 int writePath(Heap* h, int source, int dest)
 {
 	int current = dest;
-	int found = false;
-	Node* path = new Node();
+	float totalWeight = 0;
+	bool found = false;
+
+	Node* path = new Node(dest);
 
 	while (h->V[current]->getPi() != -1 && found == false)
 	{
-		if (dest == source)
+		int prev = h->V[current]->getPi();
+		if (h->V[current]->getPi() == source) 
 			found = true;
-
-		path->num = current;
-		Node* temp = new Node();
-		path->next = temp;
+		Node* temp = new Node(prev);
+		temp->next = path;
+		path = temp;
 
 		current = h->V[current]->getPi();
 	}
 
-	return 0;
+	if (found == false)
+		return -1;
+
+	Node* temp = path;
+	cout << "Shortest path: " << "<";
+	while (temp)
+	{
+		cout << temp->num;
+		if (temp->next)
+			cout << ", ";
+		temp = temp->next;
+	}
+	cout << ">\n";
+	printf("The path weight is: %12.4f\n", h->V[dest]->getDistance());
+
+	// free memory of linked list path here
+
+	return 1;
 }
 
 int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
