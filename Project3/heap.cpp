@@ -76,8 +76,8 @@ ELEMENT* Heap::extractMin(Heap* heap)
 void Heap::decreaseKey(Heap* heap, int index, float value)
 {
 	//cout << "INDEX >> " << index << "   VALUE >> " << value << "    CURRENT VALUE >> " << heap->H[index]->key << endl;
-	if (value >= heap->H[index]->key)
-		return;
+	//if (value >= heap->H[index]->key)
+		//return;
 	//cout << "Setting vertex " << heap->H[index] << ;
 	heap->H[index]->key = value;
 	int j = index;
