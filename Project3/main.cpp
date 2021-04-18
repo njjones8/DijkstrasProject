@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
-#include <climits>
+#include <limits>
 
 #include "heap.h"
 #include "util.h"
@@ -95,7 +95,7 @@ int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 	{
 		h->V[i] = (Vertex*)malloc(sizeof(Vertex));
 		h->V[i]->setColor(0);
-		h->V[i]->setDistance((float)INT_MAX);
+		h->V[i]->setDistance(FLT_MAX);
 		h->V[i]->setPi(-1);
 	}
 
