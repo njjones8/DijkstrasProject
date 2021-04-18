@@ -11,6 +11,7 @@
 struct ELEMENT {
 	float key;
 	int vertex;
+	int pos;
 };
 
 // Heap declaration
@@ -32,6 +33,7 @@ public:
 	void decreaseKey(Heap* heap, int index, float value);
 	void minHeapify(Heap* heap, int index);
 	void buildHeap(Heap* heap);
+	void movingUp(Heap* heap, int pos);
 
 	// heap extra functions
 	int parent(int n);
