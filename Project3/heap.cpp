@@ -1,5 +1,6 @@
 #include "heap.h"
 
+using namespace std;
 
 // initialize function of heap class, used to 
 // allocate 
@@ -18,11 +19,18 @@ Heap *Heap::initialize(int n)
 // the last element is then printed manually so it doesn't have a comma after it
 void Heap::printHeap(Heap* heap)
 {
-	std::cout << "capacity=" << capacity << ", size=" << size << std::endl;
+	cout << endl << "---- Printing heap ----" << endl;
+	cout << "Size: " << heap->size << endl;
 	for (int i = 1; i < heap->size; i++)
-		std::cout << heap->H[i]->key << ", ";
+		if (heap->H[i] != NULL)
+			std::cout << heap->H[i]->vertex << ", ";
 	if (heap->size > 0)
-		std::cout << heap->H[heap->size]->key << std::endl;
+		std::cout << heap->H[heap->size]->vertex << std::endl;
+	/*std::cout << "capacity=" << capacity << ", size=" << size << std::endl;
+	for (int i = 1; i < heap->size; i++)
+		std::cout << heap->H[i]->vertex << ", ";
+	if (heap->size > 0)
+		std::cout << heap->H[heap->size]->vertex << std::endl;*/
 }
 
 // increments heap size, places new element at last spot in heap and then
@@ -31,11 +39,14 @@ void Heap::insert(Heap* heap, ELEMENT* element)
 {
 	heap->size++;
 	heap->H[size] = element;
+	heap->V[element->vertex]->setPosition(size);
 	int j = size;
-
-	while ((j > 1) && (heap->H[j]->key < heap->H[heap->parent(j)]->key))
+	//heap->movingUp(heap, size);
+	//heap->printHeap(heap);
+	while ((j > 1) && (heap->H[j]->key < heap->H[parent(j)]->key))
 	{
 		swap(heap, j, heap->parent(j));
+		//heap->V[heap->H[]]
 		j = heap->parent(j);
 	}
 }
@@ -47,7 +58,16 @@ ELEMENT* Heap::extractMin(Heap* heap)
 	ELEMENT* extract = heap->H[1];
 	if (heap->size > 0)
 		swap(heap, 1, size);
-	heap->size--;
+
+	/*int j = 1;
+	while ((j <= heap->size)
+	{
+		swap(heap, j, heap->parent(j));
+		j = heap->parent(j);
+	}*/
+
+	heap->size--;	
+	//heap->printHeap(heap);
 	return extract;
 }
 
@@ -55,8 +75,14 @@ ELEMENT* Heap::extractMin(Heap* heap)
 // values up the heap to make sure it stays as a heap
 void Heap::decreaseKey(Heap* heap, int index, float value)
 {
+	//cout << "INDEX >> " << index << "   VALUE >> " << value << "    CURRENT VALUE >> " << heap->H[index]->key << endl;
+	if (value >= heap->H[index]->key)
+		return;
+	//cout << "Setting vertex " << heap->H[index] << ;
 	heap->H[index]->key = value;
 	int j = index;
+	//heap->movingUp(heap, index);
+	//heap->printHeap(heap);
 	while ((j > 1) && (heap->H[j]->key < heap->H[heap->parent(j)]->key))
 	{
 		swap(heap, j, heap->parent(j));
@@ -101,6 +127,18 @@ void Heap::swap(Heap* heap, int x, int y)
 	ELEMENT* ptr = heap->H[x];
 	heap->H[x] = heap->H[y];
 	heap->H[y] = ptr;
+	
+	/*cout << "Swapping position of vertex " << x << " with vertex " << y << endl;
+	cout << heap->V[x]->getPosition() << " swapped with " << heap->V[y]->getPosition() << endl;*/
+	int temp = heap->V[heap->H[x]->vertex]->getPosition();
+	heap->V[heap->H[x]->vertex]->setPosition(heap->V[heap->H[y]->vertex]->getPosition());
+	heap->V[heap->H[y]->vertex]->setPosition(temp);
+
+	/*Vertex* temp = heap->V[x];
+	heap->V[x] = heap->V[y];
+	heap->V[y] = temp; 
+	/*cout << endl << "---- Swapping -----" << endl 
+		<< heap->H[]*/
 }
 
 // returns the index of the parent of n

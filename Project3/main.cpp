@@ -14,11 +14,6 @@ using namespace std;
 //void garbageCollector(Heap* heap);
 int dijkstra(Graph* g, int source, int dest, int flag);
 
-void testFunc(int* n)
-{
-	cin >> *n;
-}
-
 int main()
 {
 	// variable initialization
@@ -27,6 +22,9 @@ int main()
 	ELEMENT* element = NULL;
 
 	Graph* graph = initializeGraph();
+	cout << endl;
+	graph->print();
+	cout << endl << endl;
 
 	// loops until nextcommand returns a 0
 	while (nextCommand(&cmd, &source, &destination, &flag)) 
@@ -34,11 +32,9 @@ int main()
 		switch (cmd)
 		{
 			case 1:
-				cout << "Case 1" << endl;
 				dijkstra(graph, source, destination, flag);
 				break;
 			case 2:
-				cout << "Case 2" << endl;
 				break;
 			default:
 				break;
@@ -64,19 +60,65 @@ int dijkstra(Graph* g, int source, int dest, int flag)
 
 	h->V[source]->setDistance(0);
 	h->V[source]->setColor(1);
-	h->H[source] = (ELEMENT*)malloc(sizeof(ELEMENT));
-	h->H[source]->key = 0;
-	h->insert(h, h->H[source]);
 
-	/*for (int i = 1; i <= g->getVertices(); i++)
+	ELEMENT* temp = (ELEMENT*)malloc(sizeof(ELEMENT));
+	temp->key = 0;
+	temp->vertex = source;
+
+	h->insert(h, temp);
+	if (flag)
+		printf("Insert vertex %d, key=%12.4f\n", source, h->H[source]->key);
+
+	bool found = false;
+	while ((h->size > 0) && (!found))
 	{
-		cout << h->V[i]->getColor() << endl;
-		cout << h->V[i]->getDistance() << endl;
-		cout << h->V[i]->getPi() << endl;
-	}*/
+		ELEMENT* extractNode = h->extractMin(h);
+		int extractIndex = extractNode->vertex;
+		//cout << "extractIndex = " << extractIndex << endl;
+		if (flag) {
+			printf("Delete vertex %d, key=%12.4f\n", extractIndex, extractNode->key);
+		}
+		Vertex* u = h->V[extractIndex];
+		u->setColor(2);
+		if (extractIndex == dest)
+			return 0;
 
+		Node* edge = g->getList()[extractIndex];
 
-	return 0;
+		// traverse through adjacency list while 
+		while (edge)
+		{
+			Vertex* v = h->V[edge->num];
+			if (v->getColor() == 0)
+			{
+				//cout << "edge->num" << edge->num << endl;
+				v->setDistance(u->getDistance() + edge->weight);
+				v->setPi(extractIndex);
+				v->setColor(1);
+				ELEMENT* ele = (ELEMENT*)malloc(sizeof(ELEMENT));
+				ele->key = v->getDistance();
+				ele->vertex = edge->num;
+				h->insert(h, ele);
+				if (flag)
+					printf("Insert vertex %d, key=%12.4f\n", edge->num, v->getDistance());
+			}
+			else if (v->getDistance() > (u->getDistance() + edge->weight))
+			{
+				float newDist = u->getDistance() + edge->weight;
+				if (flag)
+					printf("Decrease key of vertex %d, from %12.4f to %12.4f\n", edge->num, v->getDistance(), newDist);
+				v->setDistance(u->getDistance() + edge->weight);
+				v->setPi(extractIndex);
+				
+				int pos = v->getPosition();
+				//cout << "Current size of heap: " << h->size << endl;
+				//cout << "Setting index " << edge->num << " key to " << v->getDistance() << endl;
+				h->decreaseKey(h, v->getPosition(), v->getDistance());
+			}
+			edge = edge->next;
+		}
+	}
+	return 1;
 }
 	// loop runs until case S where program free's memory and then exits
 	/*while (1)
