@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
+#include <climits>
 
 #include "heap.h"
 #include "util.h"
@@ -19,8 +20,6 @@ int main()
 {
 	// variable initialization
 	int cmd, source, destination, flag, err;
-	Heap* heap = NULL;
-	ELEMENT* element = NULL;
 
 	Graph* graph = initializeGraph();
 	Heap* h = NULL;
@@ -51,7 +50,6 @@ int main()
 int writePath(Heap* h, int source, int dest)
 {
 	int current = dest;
-	float totalWeight = 0;
 	bool found = false;
 
 	Node* path = new Node(dest);

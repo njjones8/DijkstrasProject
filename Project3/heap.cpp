@@ -137,7 +137,7 @@ void Heap::swap(Heap* heap, int x, int y)
 	/*Vertex* temp = heap->V[x];
 	heap->V[x] = heap->V[y];
 	heap->V[y] = temp; 
-	/*cout << endl << "---- Swapping -----" << endl 
+	cout << endl << "---- Swapping -----" << endl 
 		<< heap->H[]*/
 }
 

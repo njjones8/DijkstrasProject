@@ -39,7 +39,7 @@ int nextCommand(int* c, int* s, int* d, int* f)
 {
     string cmd = "";
     bool foundCommand = false; // loop runs until it gets valid command
-    int valid = 0;
+    //int valid = 0;
 
     while (foundCommand == false)
     {
