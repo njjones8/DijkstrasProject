@@ -30,6 +30,7 @@ void Graph::insertNode(int x, int y, int edgeWeight)
 	Node* newNode = new Node(y, edgeWeight);
 	newNode->next = adjList[x];
 	adjList[x] = newNode;
+
 	if (!directed)
 	{
 		Node* newNode2 = new Node(x, edgeWeight);
