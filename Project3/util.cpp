@@ -55,11 +55,15 @@ int nextCommand(int* c, int* s, int* d, int* f)
         }
         else if (cmd == "write" || cmd == "Write")
         {
-            *c = 2;
-            cin >> *s;
-            cin >> *d;
-            printQuery(cmd, *c, *s, *d, *f);
-            foundCommand = true;
+            cin >> cmd;
+            if (cmd == "path" || cmd == "Path")
+            {
+                *c = 2;
+                cin >> *s;
+                cin >> *d;
+                printQuery(cmd, *c, *s, *d, *f);
+                foundCommand = true;
+            }
         }
         else if (cmd == "stop" || cmd == "Stop")
         {
