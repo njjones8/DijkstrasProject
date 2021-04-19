@@ -16,17 +16,17 @@ using namespace std;
 int dijkstra(Graph* g, Heap* h, int source, int dest, int flag);
 int writePath(Heap* h, int, int, int, int, int);
 
-int main(int argc, char* argv[])
+int main()//int argc, char* argv[])
 {
 	// variable initialization
 	int cmd, source, destination, flag, err;
 
-	int lastSource = -784;
-	int lastDest = -784;
+	int lastSource = -1;
+	int lastDest = -1;
 
-	Graph* graph = initializeGraph(argv[1], argv[2]);
+	Graph* graph = initializeGraph();// argv[1], argv[2]);
 	Heap* h = NULL;
-	//graph->print();
+	graph->print();
 
 	// loops until nextcommand returns a 0
 	while (nextCommand(&cmd, &source, &destination, &flag)) 
@@ -41,11 +41,11 @@ int main(int argc, char* argv[])
 				lastDest = destination;
 				break;
 			case 2:
-				if (lastSource == -784) {
+				if (lastSource == -1) {
 					cout << "Error: no path computation done\n";
 					break;
 				}
-				if (source != lastSource || source == destination || destination > graph->getVertices()) {
+				if (source != lastSource || source == destination || destination > graph->getVertices() || destination < 1) {
 					cout << "Error: invalid source destination pair\n";
 					break;
 				}
@@ -86,7 +86,7 @@ int writePath(Heap* h, int source, int lastSource, int dest, int lastDest, int n
 				return -1;
 			}
 			else 
-		{
+			{
 				cout << "No " << source << "-" << dest << " path has been computed.\n";
 				return -1;
 			}
