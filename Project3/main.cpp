@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
-#include <limits>
+#include <cfloat>
 
 #include "heap.h"
 #include "util.h"
@@ -14,14 +14,17 @@ using namespace std;
 
 //void garbageCollector(Heap* heap);
 int dijkstra(Graph* g, Heap* h, int source, int dest, int flag);
-int writePath(Heap* h, int source, int dest);
+int writePath(Heap* h, int, int, int, int, int);
 
-int main(string s, string d)
+int main(int argc, char* argv[])
 {
 	// variable initialization
 	int cmd, source, destination, flag, err;
 
-	Graph* graph = initializeGraph(s, d);
+	int lastSource = -784;
+	int lastDest = -784;
+
+	Graph* graph = initializeGraph(argv[1], argv[2]);
 	Heap* h = NULL;
 	//graph->print();
 
@@ -34,12 +37,19 @@ int main(string s, string d)
 				// free memory of heap right here if it is not NULL
 				h = h->initialize(graph->getVertices());
 				dijkstra(graph, h, source, destination, flag);
+				lastSource = source;
+				lastDest = destination;
 				break;
 			case 2:
-				// check if a find query has been done
-				err = writePath(h, source, destination);
-				if (err == -1)
-					cout << "No " << source << "-" << destination << " path exists.\n";
+				if (lastSource == -784) {
+					cout << "Error: no path computation done\n";
+					break;
+				}
+				if (source != lastSource || source == destination || destination > graph->getVertices()) {
+					cout << "Error: invalid source destination pair\n";
+					break;
+				}
+				writePath(h, source, lastSource, destination, lastDest, graph->getVertices());
 				break;
 			default:
 				break;
@@ -47,7 +57,7 @@ int main(string s, string d)
 	}
 }
 
-int writePath(Heap* h, int source, int dest)
+int writePath(Heap* h, int source, int lastSource, int dest, int lastDest, int numVertices)
 {
 	int current = dest;
 	bool found = false;
@@ -67,10 +77,27 @@ int writePath(Heap* h, int source, int dest)
 	}
 
 	if (found == false)
-		return -1;
+	{
+		if (h->V[dest]->getColor() == 0)
+		{
+			if ((lastDest < 1) || (lastDest > numVertices )|| (lastDest == dest))//h->V[numVertices]->getColor() > 0 && lastDest >= dest) 
+			{
+				cout << "No " << source << "-" << dest << " path exists.\n";
+				return -1;
+			}
+			else 
+		{
+				cout << "No " << source << "-" << dest << " path has been computed.\n";
+				return -1;
+			}
+		}
+	}
 
 	Node* temp = path;
-	cout << "Shortest path: " << "<";
+	if (h->V[dest]->getColor() == 1)
+		cout << "Path not known to be shortest: " << "<";
+	else if (h->V[dest]->getColor() == 2)
+		cout << "Shortest path: " << "<";
 	while (temp)
 	{
 		cout << temp->num;
@@ -88,9 +115,13 @@ int writePath(Heap* h, int source, int dest)
 
 int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 {
-	//h = h->initialize(g->getVertices());
-
+	if (source > g->getVertices())
+	{
+		cout << "Error: invalid find query\n";
+		return -1;
+	}
 	// initialize vertex list held in heap class
+	//cout << "1" << endl;
 	for (int i = 1; i <= g->getVertices(); i++)
 	{
 		h->V[i] = (Vertex*)malloc(sizeof(Vertex));
@@ -98,18 +129,22 @@ int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 		h->V[i]->setDistance(FLT_MAX);
 		h->V[i]->setPi(-1);
 	}
-
+	//cout << "2" << endl;
 	h->V[source]->setDistance(0);
+	//cout << "3" << endl;
 	h->V[source]->setColor(1);
-
+	//cout << "4" << endl;
 	ELEMENT* temp = (ELEMENT*)malloc(sizeof(ELEMENT));
 	temp->key = 0;
 	temp->vertex = source;
-
+	//cout << "5" << endl;
 	h->insert(h, temp);
+	//cout << "source: " << source << endl;
+	//cout << h->H[source]->key;
+	//cout << "6" << endl;
 	if (flag)
-		printf("Insert vertex %d, key=%12.4f\n", source, h->H[source]->key);
-
+		printf("Insert vertex %d, key=%12.4f\n", source, h->H[1]->key);
+	//cout << "7" << endl;
 	bool found = false;
 	while ((h->size > 0) && (!found))
 	{
@@ -123,9 +158,7 @@ int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 		u->setColor(2);
 		if (extractIndex == dest)
 			return 0;
-
 		Node* edge = g->getList()[extractIndex];
-
 		// traverse through adjacency list while 
 		while (edge)
 		{
@@ -175,7 +208,7 @@ int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 				exit(0);
 
 			// initialize heap with capacity n
-			/*case 'c':
+			case 'c':
 			case 'C':
 				heap = heap->initialize(n);
 				break;
