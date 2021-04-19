@@ -25,7 +25,7 @@ bool Graph::direction(std::string d)
 	return false;
 }
 
-void Graph::insertNode(int x, int y, int edgeWeight)
+void Graph::insertNode(int x, int y, float edgeWeight)
 {
 	Node* newNode = new Node(y, edgeWeight);
 	newNode->next = adjList[x];

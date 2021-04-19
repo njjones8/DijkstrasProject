@@ -18,7 +18,7 @@ public:
 	Graph();
 	Graph(int, std::string);
 
-	void insertNode(int x, int y, int edgeWeight);
+	void insertNode(int x, int y, float edgeWeight);
 	bool direction(std::string);
 	void print();
 	int getVertices();
