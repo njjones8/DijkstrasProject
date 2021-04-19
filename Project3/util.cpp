@@ -2,6 +2,37 @@
 
 using namespace std;
 
+Graph* initializeGraph()
+{
+    ifstream readFile;
+    string fileName;
+    cin >> fileName;
+    string direction;
+    cin >> direction;
+
+    int vertices = 0, edges = 0;
+    readFile.open(fileName);
+    readFile >> vertices;
+    readFile >> edges;
+
+    Graph* graph = new Graph(vertices, direction);
+
+    for (int i = 0; i < edges; i++)
+    {
+        int edgeNum = 0, x = 0, y = 0, weight = 0;
+        readFile >> edgeNum;
+        readFile >> x;
+        readFile >> y;
+        readFile >> weight;
+
+        graph->insertNode(x, y, weight);
+    }
+
+    readFile.close();
+
+    return graph;
+}
+
 Graph* initializeGraph(string fileName, string direction)
 {
     ifstream readFile;
