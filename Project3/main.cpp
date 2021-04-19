@@ -15,18 +15,20 @@ using namespace std;
 //void garbageCollector(Heap* heap);
 int dijkstra(Graph* g, Heap* h, int source, int dest, int flag);
 int writePath(Heap* h, int, int, int, int, int);
+void freeMemory(Heap* h, int numVertices);
 
 int main()//int argc, char* argv[])
 {
 	// variable initialization
-	int cmd, source, destination, flag, err;
+	int cmd, source, destination, flag;//, err;
 
 	int lastSource = -1;
 	int lastDest = -1;
+	int err = 0;
 
 	Graph* graph = initializeGraph();// argv[1], argv[2]);
 	Heap* h = NULL;
-	graph->print();
+	//graph->print();
 
 	// loops until nextcommand returns a 0
 	while (nextCommand(&cmd, &source, &destination, &flag)) 
@@ -35,8 +37,10 @@ int main()//int argc, char* argv[])
 		{
 			case 1:
 				// free memory of heap right here if it is not NULL
+				if (h != NULL && err != -1)
+					freeMemory(h, graph->getVertices());
 				h = h->initialize(graph->getVertices());
-				dijkstra(graph, h, source, destination, flag);
+				err = dijkstra(graph, h, source, destination, flag);
 				lastSource = source;
 				lastDest = destination;
 				break;
@@ -55,6 +59,22 @@ int main()//int argc, char* argv[])
 				break;
 		}
 	}
+}
+
+void freeMemory(Heap* h, int numVertices)
+{
+	
+	/*for (int i = 1; i <= 3; i++)
+	{
+		//cout << h->H[i] << " free " << endl;
+		free(h->H[i]);
+	}*/
+	for (int i = 1; i <= numVertices; i++)
+		free(h->V[i]);	
+	free(h->V);
+	free(h->H);
+	free(h);
+	h = NULL;
 }
 
 int writePath(Heap* h, int source, int lastSource, int dest, int lastDest, int numVertices)
@@ -108,13 +128,20 @@ int writePath(Heap* h, int source, int lastSource, int dest, int lastDest, int n
 	cout << ">\n";
 	printf("The path weight is: %12.4f\n", h->V[dest]->getDistance());
 
-	// free memory of linked list path here
+	// free memory 
+	while (path)
+	{
+		Node* del = path;
+		path = path->next;
+		free(del);
+	}
 
 	return 1;
 }
 
 int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 {
+	ELEMENT* list = NULL;
 	if (source > g->getVertices())
 	{
 		cout << "Error: invalid find query\n";
@@ -157,7 +184,10 @@ int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 		Vertex* u = h->V[extractIndex];
 		u->setColor(2);
 		if (extractIndex == dest)
+		{
+			free(temp);
 			return 0;
+		}
 		Node* edge = g->getList()[extractIndex];
 		// traverse through adjacency list while 
 		while (edge)
@@ -172,6 +202,8 @@ int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 				ELEMENT* ele = (ELEMENT*)malloc(sizeof(ELEMENT));
 				ele->key = v->getDistance();
 				ele->vertex = edge->num;
+				ele->next = list;
+				list = ele;
 				h->insert(h, ele);
 				if (flag)
 					printf("Insert vertex %d, key=%12.4f\n", edge->num, v->getDistance());
@@ -190,6 +222,15 @@ int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 			edge = edge->next;
 		}
 	}
+
+	while (list)
+	{
+		ELEMENT* del = list;
+		list = list->next;
+		free(del);
+	}
+
+	free(temp);
 	return 1;
 }
 	// loop runs until case S where program free's memory and then exits

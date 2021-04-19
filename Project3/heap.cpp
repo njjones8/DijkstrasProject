@@ -37,6 +37,7 @@ void Heap::printHeap(Heap* heap)
 // swaps nodes up the heap until it is in the right spot
 void Heap::insert(Heap* heap, ELEMENT* element)
 {
+	heap->numCalls++;
 	heap->size++;
 	heap->H[size] = element;
 	heap->V[element->vertex]->setPosition(size);

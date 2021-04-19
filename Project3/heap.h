@@ -12,6 +12,7 @@ struct ELEMENT {
 	float key;
 	int vertex;
 	int pos;
+	ELEMENT* next;
 };
 
 // Heap declaration
