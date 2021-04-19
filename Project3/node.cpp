@@ -14,7 +14,7 @@ Node::Node(int d)
 	next = NULL;
 }
 
-Node::Node(int d, int w)
+Node::Node(int d, float w)
 {
 	num = d;
 	weight = w;

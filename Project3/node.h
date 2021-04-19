@@ -15,7 +15,7 @@ public:
 	// constructor 
 	Node();
 	Node(int);
-	Node(int, int);
+	Node(int, float);
 };
 
 #endif
