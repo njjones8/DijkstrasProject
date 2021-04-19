@@ -19,7 +19,8 @@ Graph* initializeGraph()
 
     for (int i = 0; i < edges; i++)
     {
-        int edgeNum = 0, x = 0, y = 0, weight = 0;
+        int edgeNum = 0, x = 0, y = 0;
+        float weight = 0;
         readFile >> edgeNum;
         readFile >> x;
         readFile >> y;
