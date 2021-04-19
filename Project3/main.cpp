@@ -17,7 +17,7 @@ int dijkstra(Graph* g, Heap* h, int source, int dest, int flag);
 int writePath(Heap* h, int, int, int, int, int);
 void freeMemory(Heap* h, int numVertices);
 
-int main()//int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	// variable initialization
 	int cmd, source, destination, flag;//, err;
@@ -26,7 +26,7 @@ int main()//int argc, char* argv[])
 	int lastDest = -1;
 	int err = 0;
 
-	Graph* graph = initializeGraph();// argv[1], argv[2]);
+	Graph* graph = initializeGraph( argv[1], argv[2]);
 	Heap* h = NULL;
 	//graph->print();
 
@@ -63,12 +63,6 @@ int main()//int argc, char* argv[])
 
 void freeMemory(Heap* h, int numVertices)
 {
-	
-	/*for (int i = 1; i <= 3; i++)
-	{
-		//cout << h->H[i] << " free " << endl;
-		free(h->H[i]);
-	}*/
 	for (int i = 1; i <= numVertices; i++)
 		free(h->V[i]);	
 	free(h->V);
@@ -142,7 +136,7 @@ int writePath(Heap* h, int source, int lastSource, int dest, int lastDest, int n
 int dijkstra(Graph* g, Heap* h, int source, int dest, int flag)
 {
 	ELEMENT* list = NULL;
-	if (source > g->getVertices())
+	if (source > g->getVertices() || source < 1 || source > g->getVertices() || dest == source || flag < 0 || flag > 1)
 	{
 		cout << "Error: invalid find query\n";
 		return -1;
